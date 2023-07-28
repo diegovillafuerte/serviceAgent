@@ -1,0 +1,115 @@
+
+sample_function_set = [
+    {
+        "name": "cancel_flight",
+        "description": "Cancels a flight",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "reservation_number": {"type": "string", "description": "This is the six digit alphanumeric number that identifies the booking. E.g. 3X4Y7Z"},
+                "last_name": {"type": "string", "description": "The last name of the person who made the booking. E.g. Smith"},
+            },
+            "required": ["reservation_number", "last_name"]
+        }
+    },
+    {
+        "name": "book_flight",
+        "description": "Helps the user book a flight",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "departure_city": {"type": "string", "description": "The city of departure"},
+                "destination_city": {"type": "string", "description": "The city of destination"},
+                "departure_date": {"type": "string", "description": "The date of departure"},
+                "return_date": {"type": "string", "description": "The date of return (optional)"},
+            },
+            "required": ["departure_city", "destination_city"]
+        }
+    },
+    {
+        "name": "make_changes_flight",
+        "description": "Make a change to an existing reservation",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "reservation_number": {"type": "string", "description": "The reservation number to be changed"},
+                "last_name": {"type": "string", "description": "The last name of the passenger"},
+                "type_of_change": {
+                    "type": "string",
+                    "description": "The kind of change that the user wants to make",
+                    "enum": ["change_date", "select_seat", "add_bag", "change_class"]
+                }
+            },
+            "required": ["reservation_number", "last_name"]
+        }
+    }
+    {
+        "name": "request_refund",
+        "description": "Requests a refund for a flight",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "reservation_number": {"type": "string", "description": "The reservation number for the refund request"},
+                "last_name": {"type": "string", "description": "The last name of the passenger"},
+                "reason": {"type": "string", "description": "The reason for the refund request"},
+            },
+            "required": ["reservation_number", "last_name", "reason"]
+        }
+    },
+    {
+        "name": "check_in",
+        "description": "Allows a passenger to check-in for a flight",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "reservation_number": {"type": "string", "description": "The reservation number for check-in"},
+                "last_name": {"type": "string", "description": "The last name of the passenger"},
+            },
+            "required": ["reservation_number", "last_name"]
+        }
+    },
+    {
+        "name": "file_complaint",
+        "description": "Allows a passenger to file a complaint about a flight",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "reservation_number": {"type": "string", "description": "The reservation number related to the complaint"},
+                "last_name": {"type": "string", "description": "The last name of the passenger"},
+                "complaint_details": {"type": "string", "description": "Details of the complaint"},
+            },
+            "required": ["reservation_number", "last_name", "complaint_details"]
+        }
+    },
+    {
+        "name": "request_human_agent",
+        "description": "Requests to speak with a human agent for support",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "request_reason": {"type": "string", "description": "Reason for requesting human agent support"},
+            },
+            "required": ["request_reason"]
+        }
+    },
+    {
+        "name": "flight_status",
+        "description": "Requests information regarding a flight status",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "request_reason": {"type": "string", "description": "Reason for requesting human agent support"},
+                "origin": {"type": "string", "description": "The origin airport code"},
+                "destination": {"type": "string", "description": "The destination airport code"},
+                "date": {"type": "string", "description": "The date of the flight in YYYY-MM-DD format"},
+                "time": {"type": "string", "description": "The time of the flight in HH:MM format"},
+                "flight_number": {"type": "string", "description": "The flight number"}
+            },
+            "oneOf": [
+                {"required": ["origin", "destination", "date", "time"]},
+                {"required": ["flight_number", "date"]}
+            ],
+            "required": ["request_reason"]
+        }
+    }
+]
