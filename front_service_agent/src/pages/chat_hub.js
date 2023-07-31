@@ -32,7 +32,7 @@ export default function User_Hub() {
 
   const handleSendMessage = () => {
     if (userMessage.trim() !== '') {
-      const companyUserId = 7;  // Hard coded for now
+      const companyUserId = 2;  // Hard coded for now
       const email = localStorage.getItem('email');  // Retrieve the token from local storage
       setLoading(true);
 
