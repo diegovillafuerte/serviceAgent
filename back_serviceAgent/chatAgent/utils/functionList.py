@@ -121,7 +121,7 @@ sample_function_set = [
             "properties": {
                 "reservation_number": {"type": "string", "description": "The number of the reservation to be changed"},
                 "last_name": {"type": "string", "description": "The last name of the passenger"},
-                "new_date": {"type": "string","description": "The new date for the flight. This is the most important property and it is required."}
+                "new_date": {"type": "string","description": "The new date for the flight. This is the most important property and it is required.  "}
             },
             "required": ["new_date", "reservation_number", "last_name"]
         }

@@ -11,32 +11,40 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import django_heroku
+import os
+import dj_database_url
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#jt82!f33b^kfk^xyx4p9v$#l(#7!a!4n0^7++x^n^7tm)9q%*'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://front-service-agent-diegovillafuerte.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    'http://127.0.0.1:3000',  # replace with the actual origin of your React server
+    'http://127.0.0.1:3000',
+    "https://front-service-agent-diegovillafuerte.vercel.app",
 ]
 
 
@@ -65,6 +73,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+django_heroku.settings(locals())
+
+
 ROOT_URLCONF = 'back_serviceAgent.urls'
 
 TEMPLATES = [
@@ -89,12 +100,14 @@ WSGI_APPLICATION = 'back_serviceAgent.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='postgres://pxyrhrxvempffy:2f01e0476e02512a09ee8b716d8a8c6611da70314100b5242f2333aa2424a8bc@ec2-34-236-100-103.compute-1.amazonaws.com:5432/d9j6f9vqv2qroe'
+    )
 }
+
+
 
 
 # Password validation
