@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -102,9 +103,14 @@ WSGI_APPLICATION = 'back_serviceAgent.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://pxyrhrxvempffy:2f01e0476e02512a09ee8b716d8a8c6611da70314100b5242f2333aa2424a8bc@ec2-34-236-100-103.compute-1.amazonaws.com:5432/d9j6f9vqv2qroe'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd9j6f9vqv2qroe',
+        'USER': 'pxyrhrxvempffy',
+        'PASSWORD': '2f01e0476e02512a09ee8b716d8a8c6611da70314100b5242f2333aa2424a8bc',
+        'HOST': 'ec2-34-236-100-103.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
 }
 
 

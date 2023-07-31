@@ -36,7 +36,8 @@ export default function User_Hub() {
       const email = localStorage.getItem('email');  // Retrieve the token from local storage
       setLoading(true);
 
-  
+      console.log('API URL:', process.env.NEXT_PUBLIC_API_URL);
+
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chat/`, {  // Update with your actual API endpoint
         method: 'POST',
         body: JSON.stringify({ message: userMessage, email: email, companyUser_id: companyUserId }),

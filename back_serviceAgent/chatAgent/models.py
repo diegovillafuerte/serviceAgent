@@ -29,7 +29,7 @@ class Message(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
     SENDER_CHOICES = [
         ('user', 'User'),
-        ('agent', 'agent'),
+        ('agent', 'Agent'),
     ]
     sender = models.CharField(max_length=5, choices=SENDER_CHOICES)
     text = models.TextField()
