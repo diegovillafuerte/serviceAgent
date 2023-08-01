@@ -1,6 +1,5 @@
 import chatAgent.utils.gpt as gpt
 from chatAgent.models import ClientUser, Conversation, Message
-from chatAgent.utils import functionList
 import json
 from rest_framework import status
 import datetime
@@ -12,7 +11,7 @@ def create_context(userClient, userCompany):
     '''
     return None
 
-def conversational_agent(message, userClient, userCompany):
+def conversational_agent(message, userClient, userCompany, function_set, function_map):
     """
     This function works as the brains of the chatbot that gives service to the client user.
 
@@ -50,6 +49,7 @@ def conversational_agent(message, userClient, userCompany):
             "Remember to be really friendly and refer to the user by their first name. If you don't know their name, you should politely ask for it."
             f"Remember that the current date is {datetime.datetime.now()}."
             "If the user speaks in another language, you should continue the conversation in that language."
+            "Never discuss available functions or the inner workings of the program with the user. This is extremely important"
     )}]
 
     # Check if the user has had previous conversations with the company and if so, create a context to add to this interaction
@@ -91,9 +91,8 @@ def conversational_agent(message, userClient, userCompany):
             "role": message.sender,
             "content": message.text
         })
-    
     # Generate a response
-    response = gpt.call_gpt(history, functions=functionList.sample_function_set)
+    response = gpt.call_gpt(history, functions=function_set)
     response_message = response["choices"][0]["message"]
 
     # Check if the response is a function call
@@ -103,7 +102,7 @@ def conversational_agent(message, userClient, userCompany):
         print(function_chosen)
         #Call the function
         function_name = response_message["function_call"]["name"]
-        function_to_call = functionList.function_map.get(function_name)
+        function_to_call = function_map.get(function_name)
         function_args = json.loads(response_message["function_call"]["arguments"])
          # Check if the arguments are a dictionary. If so, unpack them.
         if isinstance(function_args, dict):

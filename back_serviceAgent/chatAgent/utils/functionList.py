@@ -214,4 +214,5 @@ function_map = {
     'change_flight_date' : change_flight_date
 }
 
-function_list = [function_map[func['name']] for func in sample_function_set if func['name'] in function_map]
+#Esto no se usa
+#function_list = [function_map[func['name']] for func in sample_function_set if func['name'] in function_map]

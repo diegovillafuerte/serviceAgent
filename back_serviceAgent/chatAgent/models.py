@@ -29,9 +29,9 @@ class Message(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
     SENDER_CHOICES = [
         ('user', 'User'),
-        ('agent', 'Agent'),
+        ('assistant', 'Assistant'),
     ]
-    sender = models.CharField(max_length=5, choices=SENDER_CHOICES)
+    sender = models.CharField(max_length=9, choices=SENDER_CHOICES)
     text = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 

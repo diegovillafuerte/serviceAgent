@@ -4,6 +4,7 @@ from chatAgent.models import Message, Conversation, ClientUser
 from companyAdmin.models import CompanyUser
 from chatAgent.utils.chatLogic import conversational_agent
 from rest_framework.views import APIView
+from chatAgent.utils import functionList, functionMap
 
 class ChatView(APIView):
     def post(self, request, *args, **kwargs):
@@ -20,7 +21,14 @@ class ChatView(APIView):
         # get the client user based on the email provided in the request, create if not exist
         client_user, created = ClientUser.objects.get_or_create(email=email, company=company_user)
 
+        #These are hard coded for now, but should eventually come from the database
+        #Should be:
+        #list_of_functions = companyAdmin.utils.functionManager.create_function_set(company_user_id)
+        #map_of_functions = companyAdmin.utils.functionManager.create_function_map(company_user_id)
+        list_of_functions = functionList.sample_function_set 
+        map_of_functions = functionMap.function_map
+
         # call the conversational_agent function and get the response
-        response, status_code = conversational_agent(message_text, client_user, company_user)
+        response, status_code = conversational_agent(message_text, client_user, company_user, list_of_functions, map_of_functions)
 
         return Response(response, status=status_code)
